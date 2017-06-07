@@ -1,0 +1,14 @@
+dataset_type: 'MetaDataset'
+dataset_params:
+  meta: '/mnt/vol/gfsai-east/ai-group/users/bharathh/imagenet_meta/val.json'
+transform_params:
+  transform_list: ['Scale','CenterCrop', 'ToTensor', 'Normalize']
+  image_size: 224
+  scale: 256
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+data_loader_params:
+  batch_size: 64
+  shuffle: False
+  num_workers: 12
+  pin_memory: True

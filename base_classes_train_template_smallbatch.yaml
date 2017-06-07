@@ -1,0 +1,18 @@
+dataset_type: 'MetaDataset'
+dataset_params:
+  meta: 'base_classes_train_meta.json'
+  rootdir: '/mnt/fair/imagenet-256' # Change this to ImageNet directory
+transform_params:
+  transform_list: ['RandomSizedCrop', 'ImageJitter', 'RandomHorizontalFlip', 'ToTensor', 'Normalize']
+  image_size: 224
+  jitter_params:
+    Brightness: 0.4
+    Contrast: 0.4
+    Color: 0.4 
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+data_loader_params:
+  batch_size: 100
+  shuffle: True
+  num_workers: 12
+  pin_memory: True
