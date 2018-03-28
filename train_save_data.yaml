@@ -1,6 +1,6 @@
 dataset_type: 'MetaDataset'
 dataset_params:
-  meta: '/mnt/vol/gfsai-east/ai-group/users/bharathh/imagenet_meta/train.json'
+  meta: 'train.json'
 transform_params:
   transform_list: ['Scale','CenterCrop', 'ToTensor', 'Normalize']
   image_size: 224
