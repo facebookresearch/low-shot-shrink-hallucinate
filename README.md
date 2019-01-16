@@ -5,7 +5,7 @@ This repository contains code associated with the following paper:<br>
 [Bharath Hariharan](http://home.bharathh.info/), [Ross Girshick](http://www.rossgirshick.info/)<br>
 arxiv 2016.
 
-You can find trained models [here](https://s3-us-west-1.amazonaws.com/low-shot-shrink-hallucinate/models.zip).
+You can find trained models [here](https://dl.fbaipublicfiles.com/low-shot-shrink-hallucinate/models.zip).
 
 
 ## Prerequisites
@@ -37,13 +37,13 @@ The main entry point for training a ConvNet representation is `main.py`. For exa
       --print_freq 10 --save_freq 10 \
       --aux_loss_wt 0.02 --aux_loss_type sgm \
       --checkpoint_dir checkpoints/ResNet10_sgm
-Here, `aux_loss_type` is the kind of auxilliary loss to use (`sgm` or `l2` or `batchsgm`), `aux_loss_wt` is the weight attached to this auxilliary loss, and `checkpoint_dir` is a cache directory to save the checkpoints. 
+Here, `aux_loss_type` is the kind of auxilliary loss to use (`sgm` or `l2` or `batchsgm`), `aux_loss_wt` is the weight attached to this auxilliary loss, and `checkpoint_dir` is a cache directory to save the checkpoints.
 
 The model checkpoints will be saved as epoch-number.tar. Training by default runs for 90 epochs, so the final model saved will be `89.tar`.
 
 ### Saving features from the ConvNet
 The next step is to save features from the trained ConvNet. This is fairly straightforward: first, create a directoryto save the features in, and then save the features for the train set and the validation set. Thus, for the ResNet10 model trained above:
-    
+
     mkdir -p features/ResNet10_sgm
     python ./save_features.py \
       --cfg train_save_data.yaml \
@@ -60,7 +60,7 @@ The next step is to save features from the trained ConvNet. This is fairly strai
 ### Training the analogy-based generator
 The entry point for training the analogy-based generator is `train_analogy_generator.py`.
 To train the analogy based generation on the above representation, run:
-    
+
     mkdir generation
     python ./train_analogy_generator.py \
       --lowshotmeta label_idx.json \
@@ -83,7 +83,7 @@ The main entry point for running the low shot benchmark is `low_shot.py`, which 
 There is one final wrinkle. To allow cross-validation of hyperparameters, there are two different setups for the benchmark: a validation setup, and a test setup. The setups use different settings for the hyperparameters.
 
 To run the benchmark, first create a results directory, and then run each experiment for each value of _n_. For example, running the first experiment with _n_=2 on the test setup will look like:
-    
+
     python ./low_shot.py --lowshotmeta label_idx.json \
       --experimentpath experiment_cfgs/splitfile_{:d}.json \
       --experimentid  1 --lowshotn 2 \
@@ -141,7 +141,7 @@ This will save the trained model in `matching_network_sgm.tar`.
 Then, test the model using:
 
     python matching_network.py --test 1 \
-      --trainfile features/ResNet10_sgm/train.hdf5 \ 
+      --trainfile features/ResNet10_sgm/train.hdf5 \
       --testfile features/ResNet10_sgm/val.hdf5 \
       --lowshotmeta label_idx.json \
       --modelfile matching_network_sgm.tar \
